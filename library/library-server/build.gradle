@@ -1,0 +1,47 @@
+plugins {
+    // cleanEclipse or eclipse task should never be executed manually - only needed to influence buildship 
+    id 'eclipse'
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.9"
+}
+
+group = "library"
+
+querydsl {
+    //library = "com.querydsl:querydsl-apt"
+    querydslSourcesDir = "build/src/generated/java"
+    jpa = true
+}
+
+sourceSets {
+    main {
+        java.srcDirs = ['src/main/java']
+        resources.srcDirs = ['src/main/resources']
+    }
+    
+    test {
+        java.srcDirs = ['src/test/java']
+        resources.srcDirs = ['src/test/resources']
+    }
+}
+
+configurations {
+}
+
+dependencies {
+    // needed for query dsl
+    compile("com.querydsl:querydsl-jpa:4.2.1")
+    compile("org.hibernate:hibernate-java8:5.2.12.Final")
+}
+
+/*
+eclipse.classpath.file {
+    whenMerged {
+        entries.each { entry ->
+            if (entry instanceof org.gradle.plugins.ide.eclipse.model.AbstractClasspathEntry) {
+                entry.entryAttributes.remove('gradle_scopes')
+                entry.entryAttributes.remove('gradle_used_by_scope')
+            }
+        }
+    }
+}
+*/
